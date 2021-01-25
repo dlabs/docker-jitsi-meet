@@ -21,7 +21,26 @@ We have a customly built image for the following components:
 
 * Prosody: contains updates to Prosody's configuration files, enabling CORS on dev/beta domains
 
+## Running locally
+
+
 ### Rebuilding jigasi image
+
+From the root directory, run:
+
+```
+# Force the rebuild of the image - prosody only
+FORCE_REBUILD=1 JITSI_SERVICES=jigasi make
+
+# Tag the latest local jitsi/prosody image for AWS's container registry
+docker tag jearni-jigasi:latest 476676892991.dkr.ecr.eu-west-1.amazonaws.com/jearni-jigasi:latest
+
+# To enable AWS ECR image push, acquire login credentials for AWS ECR
+aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin 476676892991.dkr.ecr.eu-west-1.amazonaws.com
+
+# Push the image to AWS ECR
+docker push 476676892991.dkr.ecr.eu-west-1.amazonaws.com/jearni-jigasi:latest
+```
 
 ### Rebuilding prosody image
 

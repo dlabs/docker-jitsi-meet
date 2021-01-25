@@ -43,6 +43,16 @@ services:
             - GC_CLIENT_EMAIL
             - GC_CLIENT_ID
             - GC_CLIENT_CERT_URL
+            - MQ_HOST
+            - MQ_PORT
+            - MQ_VIRTUALHOST
+            - MQ_USERNAME
+            - MQ_PASSWORD
+            - AWS_ACCESS_KEY_ID
+            - AWS_SECRET_ACCESS_KEY
+            - AWS_REGION
+            - AMAZON_TRANSCRIBE_BUFFER_MILLISECONDS
+            - AMAZON_TRANSCRIBE_LANGUAGE_CODE
             - TZ
         depends_on:
             - prosody
