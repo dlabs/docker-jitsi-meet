@@ -26,6 +26,12 @@ We have a customly built image for the following components:
 
 ### Rebuilding jigasi image
 
+First, if any changes to Jigasi have been made, make sure you've built a new
+version of the debian package and uploaded it to Jearni's `jearni-deb` S3 bucket.
+Instructions can be found at https://github.com/dlabs/jigasi/tree/aws-transcription-and-audio-streaming.
+
+In `jigasi/Dockerfile`, change the URL to point to newest version of deb file, e.g. `https://jearni-deb.s3-eu-west-1.amazonaws.com/jigasi_1.1-179-ga9a5de6-1_amd64.deb`.
+
 From the root directory, run:
 
 ```
