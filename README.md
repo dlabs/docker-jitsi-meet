@@ -12,6 +12,35 @@ This repository contains the necessary tools to run a Jitsi Meet stack on [Docke
 
 The installation manual is available [here](https://jitsi.github.io/handbook/docs/devops-guide/devops-guide-docker).
 
+
+## Jearni - additional notes
+
+We have a customly built image for the following components:
+
+* Jigasi: swaps the official debian package for custom build DEB package and adds jearni specific environmental variables
+
+* Prosody: contains updates to Prosody's configuration files, enabling CORS on dev/beta domains
+
+### Rebuilding jigasi image
+
+### Rebuilding prosody image
+
+From the root directory, run:
+
+```
+# Force the rebuild of the image - prosody only
+FORCE_REBUILD=1 JITSI_SERVICES=prosody make
+
+# Tag the latest local jitsi/prosody image for AWS's container registry
+docker tag jitsi/prosody:latest 476676892991.dkr.ecr.eu-west-1.amazonaws.com/jearni-prosody:latest
+
+# To enable AWS ECR image push, acquire login credentials for AWS ECR
+aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin 476676892991.dkr.ecr.eu-west-1.amazonaws.com
+
+# Push the image to AWS ECR
+docker push 476676892991.dkr.ecr.eu-west-1.amazonaws.com/jearni-prosody:latest
+```
+
 ## TODO
 
 * Support container replicas (where applicable).

@@ -12,6 +12,7 @@ RUN \
       luarocks \
       git \
       gcc \
+      wget \
     && luarocks install cyrussasl 1.1.0-1 \
     && luarocks install net-url 0.9-1 \
     && luarocks install luajwtjitsi 2.0-0
@@ -19,6 +20,10 @@ RUN \
 FROM ${JITSI_REPO}/base
 
 ENV XMPP_CROSS_DOMAIN="false"
+
+RUN \
+  apt-dpkg-wrap apt-get update \
+  && apt-dpkg-wrap apt-get install -y wget
 
 RUN \
     wget -q https://prosody.im/files/prosody-debian-packages.key -O - | gpg --enarmor > /etc/apt/trusted.gpg.d/prosody.asc \
