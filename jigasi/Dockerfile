@@ -14,7 +14,7 @@ RUN \
 # RUN dpkg -i /tmp/jigasi.deb
 
 RUN \
-	curl https://jearni-deb.s3-eu-west-1.amazonaws.com/jigasi_1.1-182-g81e2507-1_amd64.deb --output /tmp/jigasi.deb && \
+	curl https://jearni-deb.s3-eu-west-1.amazonaws.com/jigasi_1.1-187-g8061c62-1_amd64.deb --output /tmp/jigasi.deb && \
 	dpkg -i /tmp/jigasi.deb
 
 COPY rootfs/ /
