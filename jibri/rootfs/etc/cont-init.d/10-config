@@ -37,6 +37,8 @@ groupadd -g ${host_audio_group} jibri-audio >/dev/null 2>&1
 # include user to the group by id
 usermod -aG ${host_audio_group} jibri
 
+tpl /defaults/finalize.sh > "${JIBRI_FINALIZE_RECORDING_SCRIPT_PATH}"
+
 # script for finalizing must have executing bit.
 [ ! -z "${JIBRI_FINALIZE_RECORDING_SCRIPT_PATH}" ] \
 && [ -f "${JIBRI_FINALIZE_RECORDING_SCRIPT_PATH}" ] \

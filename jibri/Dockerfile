@@ -10,8 +10,13 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 RUN \
 	apt-dpkg-wrap apt-get update \
-	&& apt-dpkg-wrap apt-get install -y jibri libgl1-mesa-dri procps \
+	&& apt-dpkg-wrap apt-get install -y libgl1-mesa-dri procps ffmpeg curl alsa-utils icewm xdotool xserver-xorg-input-void xserver-xorg-video-dummy \
 	&& apt-cleanup
+
+# The lines below can be used if DEB pacakge is present locally
+# (avoids the need to upload DEB to S3)
+COPY debs/jibri.deb /tmp/jibri.deb
+RUN dpkg -i /tmp/jibri.deb
 
 RUN \
 	[ "${CHROME_RELEASE}" = "latest" ] \
@@ -41,7 +46,7 @@ RUN \
 
 RUN \
         apt-dpkg-wrap apt-get update \
-        && apt-dpkg-wrap apt-get install -y jitsi-upload-integrations jq \
+        && apt-dpkg-wrap apt-get install -y jitsi-upload-integrations awscli s3cmd jq \
         && apt-cleanup
 
 COPY rootfs/ /
