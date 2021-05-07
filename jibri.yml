@@ -2,7 +2,7 @@ version: '3'
 
 services:
     jibri:
-        image: jitsi/jibri:latest
+        image: 476676892991.dkr.ecr.eu-west-1.amazonaws.com/jearni-jibri:custom-ffmpeg
         restart: ${RESTART_POLICY}
         volumes:
             - ${CONFIG}/jibri:/config:Z

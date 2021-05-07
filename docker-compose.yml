@@ -103,7 +103,7 @@ services:
 
     # XMPP server
     prosody:
-        image: jitsi/prosody:latest
+        image: 476676892991.dkr.ecr.eu-west-1.amazonaws.com/jearni-prosody:latest
         restart: ${RESTART_POLICY}
         expose:
             - '5222'
