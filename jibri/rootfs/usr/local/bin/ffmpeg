@@ -1,0 +1,5 @@
+#!/bin/bash
+echo ffmpeg in $0
+ARGS=$@
+ARGS=$(echo $ARGS | sed 's/-tune zerolatency/-tune zerolatency -vf scale=854x480/')
+exec /usr/local/bin/ffmpeg-bin $ARGS

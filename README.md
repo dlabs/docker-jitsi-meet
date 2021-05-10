@@ -12,6 +12,60 @@ This repository contains the necessary tools to run a Jitsi Meet stack on [Docke
 
 The installation manual is available [here](https://jitsi.github.io/handbook/docs/devops-guide/devops-guide-docker).
 
+
+## Jearni - additional notes
+
+We have a customly built image for the following components:
+
+* Jigasi: swaps the official debian package for custom build DEB package and adds jearni specific environmental variables
+
+* Prosody: contains updates to Prosody's configuration files, enabling CORS on dev/beta domains
+
+## Running locally
+TODO
+
+### Rebuilding jigasi image
+
+First, if any changes to Jigasi have been made, make sure you've built a new
+version of the debian package and uploaded it to Jearni's `jearni-deb` S3 bucket.
+Instructions can be found at https://github.com/dlabs/jigasi/tree/aws-transcription-and-audio-streaming.
+
+In `jigasi/Dockerfile`, change the URL to point to newest version of deb file, e.g. `https://jearni-deb.s3-eu-west-1.amazonaws.com/jigasi_1.1-179-ga9a5de6-1_amd64.deb`.
+
+From the root directory, run:
+
+```
+# Force the rebuild of the image - prosody only
+FORCE_REBUILD=1 JITSI_SERVICES=jigasi make
+
+# Tag the latest local jitsi/prosody image for AWS's container registry
+docker tag jitsi/jigasi:latest 476676892991.dkr.ecr.eu-west-1.amazonaws.com/jearni-jigasi:latest
+
+# To enable AWS ECR image push, acquire login credentials for AWS ECR
+aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin 476676892991.dkr.ecr.eu-west-1.amazonaws.com
+
+# Push the image to AWS ECR
+docker push 476676892991.dkr.ecr.eu-west-1.amazonaws.com/jearni-jigasi:latest
+```
+
+### Rebuilding prosody image
+
+From the root directory, run:
+
+```
+# Force the rebuild of the image - prosody only
+FORCE_REBUILD=1 JITSI_SERVICES=prosody make
+
+# Tag the latest local jitsi/prosody image for AWS's container registry
+docker tag jitsi/prosody:latest 476676892991.dkr.ecr.eu-west-1.amazonaws.com/jearni-prosody:latest
+
+# To enable AWS ECR image push, acquire login credentials for AWS ECR
+aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin 476676892991.dkr.ecr.eu-west-1.amazonaws.com
+
+# Push the image to AWS ECR
+docker push 476676892991.dkr.ecr.eu-west-1.amazonaws.com/jearni-prosody:latest
+```
+
 ## TODO
 
 * Support container replicas (where applicable).
