@@ -39,7 +39,7 @@ cross_domain_bosh = true
 {{ if not (eq $XMPP_CROSS_DOMAIN "false") }}
   {{ $XMPP_CROSS_DOMAINS = list $PUBLIC_URL (print "https://" .Env.XMPP_DOMAIN) .Env.XMPP_CROSS_DOMAIN | join "," }}
 {{ end }}
-cross_domain_websocket = { "https://localhost", "https://localhost:9999", "https://dev.dy9uj27xfit3d.amplifyapp.com", "https://beta.dev.decblue.com", "{{ $PUBLIC_URL }}" };
+cross_domain_websocket = { "https://localhost", "https://localhost:9999", "https://dev.dy9uj27xfit3d.amplifyapp.com", "https://beta.dev.decblue.com", "https://talk.dev.decblue.com", "{{ $PUBLIC_URL }}" };
 cross_domain_bosh = { "{{ join "\",\"" (splitList "," $XMPP_CROSS_DOMAINS) }}" }
 {{ end }}
 
